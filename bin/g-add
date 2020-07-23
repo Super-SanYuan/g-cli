@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+const inquirer = require('inquirer') // 交互命令行
+const chalk = require('chalk') // 控制台字符串样式
+const fs = require('fs') // node 文件模块
+const tplObj = require(`${__dirname}/../template`) // template.json
+
+const question = [
+  {
+    name: 'name',
+    type: 'input',
+    message: '请输入模板名称',
+    validate(val) {
+      if (val.trim() === '') {
+        return '模板名称不能为空'
+      } else if (tplObj[val]) {
+        return '模板名已存在'
+      }
+      return true
+    }
+  },
+  {
+    name: 'url',
+    type: 'input',
+    message: '请输入模板地址',
+    validate(val) {
+      if (val.trim() === '') return '模板地址不能为空'
+      return true
+    }
+  }
+]
+
+inquirer
+  .prompt(question).then(answers => {
+    const { name, url } = answers // 获取用户输入
+    tplObj[name] = url.replace(/[\u0000-\u0019]/g, '') // 过滤 unicode 自付字符
+
+    fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tplObj), 'utf-8', err => {
+      if (err) console.log(err)
+      console.log(`
+      ${chalk.green('新增成功')}
+      ${chalk.grey('最新的模板列表:')}
+      ${JSON.stringify(tplObj)}
+      `)
+    })
+  })
