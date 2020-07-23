@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const progarm = require('commander')
+
+const config = require('../package.json')
+
+progarm
+  .version(config.version) // 版本
+  .usage('<command> [options]') // 用法
+  .command('add', '添加一个新的模板') // 指令
+  .command('del', '删除指定模板')
+  .command('ls', '查看所有可用模板')
+  .command('create', '使用已有模板新建项目')
+
+// 解析命令行参数
+progarm.parse(process.argv)

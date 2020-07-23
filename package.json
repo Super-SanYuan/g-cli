@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "g": "bin/g",
+    "g-del": "bin/g-del",
+    "g-add": "bin/g-add",
+    "g-ls": "bin/g-ls",
+    "g-create": "bin/g-create"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ginger-Jiang/g-cli.git"
