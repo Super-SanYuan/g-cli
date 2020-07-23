@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const chalk = require('chalk')
+const inquirer = require('inquirer')
+const tplObj = require(`${__dirname}/../template`)
+
+const question = [
+  {
+    name: 'name',
+    message: '请输入要删除的模板名称',
+    validate(val) {
+      if (val.trim() === '') {
+        return '模板名称不能为空'
+      } else if (!tplObj[val]) {
+        return val + ' 模板不存在'
+      }
+      return true
+    }
+  }
+]
+
+inquirer
+  .prompt(question).then(answers => {
+    const { name } = answers
+
+    delete tplObj[name]
+
+    fs.writeFile(`${__dirname}/../template.json`, JSON.stringify(tplObj), 'utf-8', err => {
+      if (err) console.log(err)
+      console.log(`
+      ${chalk.green('删除成功')}
+      ${chalk.grey('最新的模板列表:')}
+      ${JSON.stringify(tplObj)}
+      `)
+    })
+  })
+
