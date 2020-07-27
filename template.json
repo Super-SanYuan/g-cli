@@ -1,1 +1,6 @@
-{"demo":"www.baidu.com"}
+{
+  "demo": "https://github.com/Ginger-Jiang/vue-tmplate.git",
+  "demo2": "direct:https://github.com/Ginger-Jiang/vue-tmplate.git",
+  "vue-temp": "github:Ginger-Jiang/vue-tmplate",
+  "demo3": "github:Ginger-Jiang/vue-template#master"
+}
